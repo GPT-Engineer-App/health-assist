@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, VStack, HStack, Input, Text, RadioGroup, Radio, Button, IconButton, Box, FormControl, FormLabel, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
+import Header from "../components/Header";
 import { FaPlus, FaTrash } from "react-icons/fa";
 
 const Index = () => {
@@ -28,7 +29,8 @@ const Index = () => {
 
   return (
     <Container centerContent maxW="container.md" p={4}>
-      <VStack spacing={4} width="100%">
+      <Header />
+      <VStack spacing={4} width="100%" mt={4}>
         <FormControl>
           <FormLabel>Patient Name</FormLabel>
           <Input value={patientName} onChange={(e) => setPatientName(e.target.value)} placeholder="Enter patient name" />
