@@ -130,7 +130,9 @@ const Index = () => {
           Add Medicine
         </Button>
       </VStack>
-      <IconButton icon={<FaPaperPlane />} colorScheme="teal" aria-label="Submit" position="fixed" bottom={4} right={4} onClick={handleSubmit} />
+      <Button leftIcon={<FaPaperPlane />} colorScheme="teal" aria-label="Submit" position="fixed" bottom={4} right={4} onClick={handleSubmit}>
+        Send
+      </Button>
     </Container>
   );
 };
