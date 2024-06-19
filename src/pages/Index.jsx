@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Container, VStack, HStack, Input, Text, RadioGroup, Radio, Button, IconButton, Box, FormControl, FormLabel, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper } from "@chakra-ui/react";
+import { Container, VStack, HStack, Input, Text, RadioGroup, Radio, Button, IconButton, Box, FormControl, FormLabel, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, useToast } from "@chakra-ui/react";
 import Header from "../components/Header";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaPlus, FaTrash, FaPaperPlane } from "react-icons/fa";
 
 const Index = () => {
   const [patientName, setPatientName] = useState("");
@@ -25,6 +25,52 @@ const Index = () => {
   const handleDaysChange = (index, value) => {
     const newMedicines = medicines.map((medicine, i) => (i === index ? { ...medicine, days: value, totalTablets: value * 3 } : medicine));
     setMedicines(newMedicines);
+  };
+
+  const toast = useToast();
+
+  const handleSubmit = async () => {
+    const data = {
+      patientName,
+      phoneNumber,
+      medicines,
+    };
+
+    try {
+      const response = await fetch("https://api.example.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "Data submitted successfully.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to submit data.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while submitting data.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (
@@ -84,6 +130,7 @@ const Index = () => {
           Add Medicine
         </Button>
       </VStack>
+      <IconButton icon={<FaPaperPlane />} colorScheme="teal" aria-label="Submit" position="fixed" bottom={4} right={4} onClick={handleSubmit} />
     </Container>
   );
 };
