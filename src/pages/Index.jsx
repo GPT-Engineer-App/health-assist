@@ -5,6 +5,9 @@ import { FaPlus, FaTrash, FaPaperPlane } from "react-icons/fa";
 
 const Index = () => {
   const [patientName, setPatientName] = useState("");
+  const [weight, setWeight] = useState("");
+  const [height, setHeight] = useState("");
+  const [bp, setBp] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [medicines, setMedicines] = useState([{ name: "", dosage: "morning", food: "before", days: 1, totalTablets: 1 }]);
 
@@ -33,6 +36,9 @@ const Index = () => {
     const data = {
       patientName,
       phoneNumber,
+      weight,
+      height,
+      bp,
       medicines,
     };
 
