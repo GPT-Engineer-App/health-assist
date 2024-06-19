@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, VStack, HStack, Input, Text, RadioGroup, Radio, Button, IconButton, Box, FormControl, FormLabel, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, useToast } from "@chakra-ui/react";
+import { Container, VStack, HStack, Input, Text, CheckboxGroup, Checkbox, RadioGroup, Radio, Button, IconButton, Box, FormControl, FormLabel, NumberInput, NumberInputField, NumberInputStepper, NumberIncrementStepper, NumberDecrementStepper, useToast } from "@chakra-ui/react";
 import Header from "../components/Header";
 import { FaPlus, FaTrash, FaPaperPlane } from "react-icons/fa";
 
@@ -9,10 +9,10 @@ const Index = () => {
   const [height, setHeight] = useState("");
   const [bp, setBp] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [medicines, setMedicines] = useState([{ name: "", dosage: "morning", food: "before", days: 1, totalTablets: 1 }]);
+  const [medicines, setMedicines] = useState([{ name: "", dosage: [], food: "before", days: 1, totalTablets: 1 }]);
 
   const handleAddMedicine = () => {
-    setMedicines([...medicines, { name: "", dosage: "morning", food: "before", days: 1, totalTablets: 1 }]);
+    setMedicines([...medicines, { name: "", dosage: [], food: "before", days: 1, totalTablets: 1 }]);
   };
 
   const handleRemoveMedicine = (index) => {
@@ -21,7 +21,15 @@ const Index = () => {
   };
 
   const handleMedicineChange = (index, field, value) => {
-    const newMedicines = medicines.map((medicine, i) => (i === index ? { ...medicine, [field]: value } : medicine));
+    const newMedicines = medicines.map((medicine, i) => {
+      if (i === index) {
+        if (field === "dosage") {
+          return { ...medicine, dosage: value };
+        }
+        return { ...medicine, [field]: value };
+      }
+      return medicine;
+    });
     setMedicines(newMedicines);
   };
 
@@ -100,13 +108,13 @@ const Index = () => {
               </FormControl>
               <FormControl>
                 <FormLabel>Dosage</FormLabel>
-                <RadioGroup value={medicine.dosage} onChange={(value) => handleMedicineChange(index, "dosage", value)}>
+                <CheckboxGroup value={medicine.dosage} onChange={(value) => handleMedicineChange(index, "dosage", value)}>
                   <HStack spacing={4}>
-                    <Radio value="morning">Morning</Radio>
-                    <Radio value="afternoon">Afternoon</Radio>
-                    <Radio value="night">Night</Radio>
+                    <Checkbox value="morning">Morning</Checkbox>
+                    <Checkbox value="afternoon">Afternoon</Checkbox>
+                    <Checkbox value="night">Night</Checkbox>
                   </HStack>
-                </RadioGroup>
+                </CheckboxGroup>
               </FormControl>
               <FormControl>
                 <FormLabel>Before/After Food</FormLabel>
